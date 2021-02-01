@@ -1,22 +1,22 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import SeasonDisplay from './SeasonDisplay';
 
 
 class App extends React.Component{
-    constructor(props){
+    /*constructor(props){
         super(props);
         this.state = {lat: null, errorMessage: ''};
-        window.navigator.geolocation.getCurrentPosition(
-            position => {
-                //we call setState method
-                this.setState({lat: position.coords.latitude});
-            },
-            err => {
-                this.setState({errorMessage: err.message});
-            }
-           );
 
-    }
+    }*/
+    //this is same as using constructor
+    state ={lat: null, errorMessage: ''};
+    componentDidMount(){
+        window.navigator.geolocation.getCurrentPosition(
+            position => this.setState({lat: position.coords.latitude}),
+            err => this.setState({errorMessage: err.message}) 
+        );
+        }
     render(){
         
         if(this.state.errorMessage && !this.state.lat){
@@ -24,7 +24,7 @@ class App extends React.Component{
 
         }
         if(!this.state.errorMessage && this.state.lat){
-            return <div>Latitude: {this.state.lat}</div>
+            return <SeasonDisplay lat = {this.state.lat} /> 
         }
         return <div>Loading!</div>
     }
